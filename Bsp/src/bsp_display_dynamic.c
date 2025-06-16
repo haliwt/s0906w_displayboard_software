@@ -350,7 +350,10 @@ void Display_SmgTiming_Value(void)
    switch(gpro_t.set_timer_timing_value_success){
 
 	   case TIMER_SUCCESS:
-
+             if(gpro_t.mainBord_setTimer_flag==1){
+			   gpro_t.mainBord_setTimer_flag=0;
+               run_t.timer_dispTime_minutes=0;
+              }
 	   
 			   if(run_t.gTimer_timer_seconds_counter > 59){
 			    run_t.gTimer_timer_seconds_counter =0;
@@ -362,7 +365,7 @@ void Display_SmgTiming_Value(void)
 				   run_t.timer_dispTime_hours -- ;
 				   run_t.timer_dispTime_minutes =59;
 				
-				   uint8_t dataToSend[3] = {run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes, run_t.gTimer_timer_seconds_counter}; // 要发送的 3 个数据
+				   uint8_t dataToSend[3] = {run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes, run_t.gTimer_timer_seconds_counter}; // 要发送的 3 个数�?
            			SendData_ToMainboard_Data(0x5C, dataToSend, 3); // cmd=0x1A, 数据长度=3
                     osDelay(5);
 		         }

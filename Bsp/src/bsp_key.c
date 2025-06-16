@@ -226,12 +226,13 @@ void set_timer_fun_led_blink(void)
 
       	}
          else{
-        	 run_t.hours_two_decade_bit = run_t.timer_dispTime_hours/10,
-        	 run_t.hours_two_unit_bit  = run_t.timer_dispTime_hours %10;
-        	 run_t.minutes_one_decade_bit = run_t.timer_dispTime_minutes /10;
-        	 run_t.minutes_one_unit_bit = run_t.timer_dispTime_minutes %10;
-        	 TM1639_Write_4Bit_Time_sync_close(run_t.hours_two_decade_bit,run_t.hours_two_unit_bit, run_t.minutes_one_decade_bit,run_t.minutes_one_unit_bit,time_smg_blink) ;
-             
+		 	
+	        	 run_t.hours_two_decade_bit = run_t.timer_dispTime_hours/10,
+	        	 run_t.hours_two_unit_bit  = run_t.timer_dispTime_hours %10;
+	        	 run_t.minutes_one_decade_bit = run_t.timer_dispTime_minutes /10;
+	        	 run_t.minutes_one_unit_bit = run_t.timer_dispTime_minutes %10;
+	        	 TM1639_Write_4Bit_Time_sync_close(run_t.hours_two_decade_bit,run_t.hours_two_unit_bit, run_t.minutes_one_decade_bit,run_t.minutes_one_unit_bit,time_smg_blink) ;
+		 	
          }
      
        
