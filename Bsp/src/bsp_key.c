@@ -302,9 +302,10 @@ void disp_smg_blink_set_tempeature_value(void)
 			  Display_DHT11_Value();
               gpro_t.g_manual_shutoff_dry_flag=0; //WT.EDIT 2025.05.28
 
-		
+		        SendData_ToMainboard_Data(0x2A,&gpro_t.set_up_temperature_value,0x01);
+                osDelay(5);
 			
-			  
+			     
               
              }
 		  

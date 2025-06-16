@@ -445,7 +445,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 			  gpro_t.set_timer_first_smg_blink_flag=0;
 			  gpro_t.set_timer_timing_value_success=1;
 			  run_t.timer_dispTime_hours=pdata[5];
-			  run_t.temporary_timer_dispTime_hours=pdata[5];
+
 			  gpro_t.mainBord_setTimer_flag = 1;
 	  
 			 	 run_t.hours_two_decade_bit    = run_t.timer_dispTime_hours / 10;
