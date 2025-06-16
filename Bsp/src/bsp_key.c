@@ -175,7 +175,8 @@ void Set_TimerTiming_Number_Value(void)
 			}
 
 			Display_Timing(run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes,0);
-
+            SendData_ToMainboard_Data(0x2B,&run_t.timer_dispTime_hours,0x01);
+	        osDelay(5);
 
 		}
 		else{
@@ -230,8 +231,7 @@ void set_timer_fun_led_blink(void)
         	 run_t.minutes_one_decade_bit = run_t.timer_dispTime_minutes /10;
         	 run_t.minutes_one_unit_bit = run_t.timer_dispTime_minutes %10;
         	 TM1639_Write_4Bit_Time_sync_close(run_t.hours_two_decade_bit,run_t.hours_two_unit_bit, run_t.minutes_one_decade_bit,run_t.minutes_one_unit_bit,time_smg_blink) ;
-             SendData_ToMainboard_Data(0x2B,&run_t.timer_dispTime_hours,0x01);
-	         osDelay(5);
+             
          }
      
        
@@ -322,12 +322,12 @@ void disp_smg_blink_set_tempeature_value(void)
 	*
 *****************************************************************/
 #if 0
-// 按键参数宏定义
-#define KEY_LONG_PRESS_THRESHOLD   30  // 长按触发阈值（30个周期=300ms）
-#define KEY_SHORT_PRESS_MIN        1   // 短按最小时间（1个周期=10ms）
-#define KEY_MAX_COUNTER            60  // 计数器最大值
+// 按键参数宏定�?
+#define KEY_LONG_PRESS_THRESHOLD   30  // 长按触发阈�?�（30个周�?=300ms�?
+#define KEY_SHORT_PRESS_MIN        1   // 短按�?小时间（1个周�?=10ms�?
+#define KEY_MAX_COUNTER            60  // 计数器最大�??
 #define DEBOUNCE_DELAY_MS          5   // 消抖延时
-#define SHORT_PRESS_COOLDOWN       5   // 短按冷却时间（5个周期=50ms）
+#define SHORT_PRESS_COOLDOWN       5   // 短按冷却时间�?5个周�?=50ms�?
 
 void mode_key_handler(void) 
 {
@@ -354,7 +354,7 @@ void mode_key_handler(void)
            // short_press_cooldown = SHORT_PRESS_COOLDOWN; // 设置冷却时间
         }
         
-        // 释放后重置状态
+        // 释放后重置状�?
         gpro_t.mode_Key_long_counter = 0;
         long_press_handled = false;
      }
@@ -382,9 +382,9 @@ void mode_key_handler(void)
 
 #if 0
 
-// 按键参数宏定义
-#define KEY_LONG_PRESS_THRESHOLD   30  // 长按触发阈值（30*10ms=300ms）
-#define KEY_SHORT_PRESS_MIN        1   // 最小按下时间（1*10ms=10ms）
+// 按键参数宏定�?
+#define KEY_LONG_PRESS_THRESHOLD   30  // 长按触发阈�?�（30*10ms=300ms�?
+#define KEY_SHORT_PRESS_MIN        1   // �?小按下时间（1*10ms=10ms�?
 #define DEBOUNCE_DELAY_MS          5   // 消抖延时
 
 void mode_key_handler(void) 
@@ -398,19 +398,19 @@ void mode_key_handler(void)
     
     /*----------- 按键按下处理 -----------*/
     if (current_key_state == KEY_DOWN) {
-        // 首次按下（从释放到按下的边沿）
+        // 首次按下（从释放到按下的边沿�?
         if (last_key_state == KEY_UP) {
             // 立即触发短按功能
             SendData_Buzzer();
             osDelay(DEBOUNCE_DELAY_MS);
             mode_key_short_fun();
             
-            // 重置长按计数器
+            // 重置长按计数�?
             gpro_t.mode_Key_long_counter = 0;
             long_press_handled = false;
         }
         
-        // 长按检测（持续按下时处理）
+        // 长按�?测（持续按下时处理）
         if (gpro_t.mode_Key_long_counter < KEY_LONG_PRESS_THRESHOLD) {
             gpro_t.mode_Key_long_counter++;
         }
@@ -425,12 +425,12 @@ void mode_key_handler(void)
     } 
     /*----------- 按键释放处理 -----------*/
     else if (current_key_state == KEY_UP) {
-        // 释放时重置长按状态
+        // 释放时重置长按状�?
         gpro_t.mode_Key_long_counter = 0;
         long_press_handled = false;
     }
     
-    last_key_state = current_key_state; // 更新状态
+    last_key_state = current_key_state; // 更新状�??
 }
 
 #endif 
