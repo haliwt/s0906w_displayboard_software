@@ -390,7 +390,7 @@ void Display_SmgTiming_Value(void)
         
 	    break;
 
-		case TIMER_NORMAL_TIMING: //NO_AI_MODE by timer timing  auto be changed AI_MODE
+		case WORKS_TIMING: //NO_AI_MODE by timer timing  auto be changed AI_MODE
 			
     
           if(run_t.gTimer_timing_seconds_counter > 59){

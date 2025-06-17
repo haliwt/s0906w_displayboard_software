@@ -174,6 +174,14 @@ void Set_TimerTiming_Number_Value(void)
 			
 
 		}
+		else if(gpro_t.set_timer_timing_value_success  == WORKS_TIMING && gpro_t.key_add_dec_pressed_flag ==0 && gpro_t.main_settemp_value ==1){
+          
+            gpro_t.main_settemp_value =0;
+			gpro_t.set_timer_timing_value_success= 0;
+			Display_Timing(run_t.works_dispTime_hours,run_t.works_dispTime_minutes,0);
+			
+
+		}
 		else if(run_t.temporary_timer_dispTime_hours >0 && gpro_t.key_add_dec_pressed_flag ==1){
 			gpro_t.set_timer_timing_value_success  = TIMER_SUCCESS;
 			run_t.gTimer_timer_seconds_counter = 0;

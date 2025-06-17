@@ -324,7 +324,7 @@ void mode_key_handler(void)
 	if(MODEL_KEY_VALUE() == KEY_DOWN && gpro_t.mode_Key_long_counter < 200){
 		gpro_t.mode_Key_long_counter++;
 
-	    if( run_t.wifi_led_fast_blink==1 && gpro_t.mode_Key_long_counter > 20){
+	    if( run_t.wifi_led_fast_blink==1 && gpro_t.mode_Key_long_counter > 20){//be sovled this is a bug .
 	    	  handle_mode_key_long_press();
 
 

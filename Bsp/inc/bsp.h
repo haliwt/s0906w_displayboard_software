@@ -55,7 +55,7 @@
 
 typedef enum{
 
-  TIMER_NORMAL_TIMING,
+  WORKS_TIMING,
   TIMER_SUCCESS
 
 }TIMER_STATE;
