@@ -31,6 +31,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 {
     
    static uint8_t power_on_counter;
+   uint8_t temp_value;
     switch(pdata[2]){
 
      case 0:
@@ -71,11 +72,17 @@ void receive_data_from_mainboard(uint8_t *pdata)
            gpro_t.smartphone_app_timer_power_on_flag =1;
 		    run_t.gPower_On = power_on;
 			 power_on_handler();
+			 temp_value = 1;
+			 SendData_CopyCmd_Data(0x01,&temp_value,0);
+			 osDelay(5);
 		   	}
 		    else{
 
 				run_t.gPower_On = power_off;
                 run_t.gRunCommand_label =RUN_NULL;
+			    temp_value = 0;
+			     SendData_CopyCmd_Data(0x01,& temp_value,0);
+				 osDelay(5);
 
 			}
            
