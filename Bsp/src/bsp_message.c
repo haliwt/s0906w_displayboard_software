@@ -445,7 +445,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 		  
 			if(pdata[4]== 0x01){ // one only data 
 
-			  run_t.timer_dispTime_hours=pdata[5];
+			  run_t.timer_dispTime_hours=pdata[5]; //this is data don't command .
 			  if(run_t.timer_dispTime_hours> 0){
 		      gpro_t.set_timer_timing_doing_value = 1;
 			  gpro_t.key_add_dec_pressed_flag =0;
