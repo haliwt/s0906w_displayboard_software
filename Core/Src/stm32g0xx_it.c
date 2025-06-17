@@ -72,19 +72,19 @@ extern DMA_HandleTypeDef hdma_usart1_tx;
 /*           Cortex-M0+ Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
-  * @brief This function handles DMA1 channel 2 and channel 3 interrupts.
+  * @brief This function handles DMA1 channel 1 interrupt.
   */
-void DMA1_Channel2_3_IRQHandler(void)
+void DMA1_Channel1_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA1_Channel2_3_IRQn 0 */
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
 
-  /* USER CODE END DMA1_Channel2_3_IRQn 0 */
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart1_tx);
- // HAL_DMA_IRQHandler(&hdma_usart1_rx);
-  /* USER CODE BEGIN DMA1_Channel2_3_IRQn 1 */
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
-  /* USER CODE END DMA1_Channel2_3_IRQn 1 */
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
+
 
 
 /**

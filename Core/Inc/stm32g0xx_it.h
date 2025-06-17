@@ -50,7 +50,8 @@
 void NMI_Handler(void);
 void HardFault_Handler(void);
 void SysTick_Handler(void);
-//void DMA1_Channel2_3_IRQHandler(void);//void DMA1_Channel1_IRQHandler(void);
+void DMA1_Channel1_IRQHandler(void);
+
 
 void TIM3_IRQHandler(void);
 void USART1_IRQHandler(void);

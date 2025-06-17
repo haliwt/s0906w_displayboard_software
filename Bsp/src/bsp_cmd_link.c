@@ -24,7 +24,7 @@ volatile uint8_t transferSize;
 static void sendUartData(uint8_t *data, uint8_t size) 
 {
 
-    #if USART1_INTERRUPT
+    #if 0    //USART1_INTERRUPT
 		if (size) {
 			while (transOngoingFlag); // 等待上一次传输完�?
 			transOngoingFlag = 1;
@@ -201,7 +201,9 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
     }
 }
 
-uint8_t rx_buffer[10];
+
+
+#if 0
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) 
 {
@@ -214,7 +216,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
     }
 }
 
-
+#endif 
 
 #if 0
 // 定义宏，提高代码可读�?
