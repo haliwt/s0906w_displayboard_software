@@ -186,13 +186,17 @@ void Set_TimerTiming_Number_Value(void)
 			}
 
 			Display_Timing(run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes,0);
-            SendData_ToMainboard_Data(0x2B,(uint8_t*)run_t.timer_dispTime_hours,0x01);
+            SendData_ToMainboard_Data(0x2B,&run_t.timer_dispTime_hours,0x01);
 	        osDelay(5);
 
 		}
 		else{
 
 			gpro_t.set_timer_timing_value_success  = 0;
+			run_t.timer_dispTime_hours=0;
+			Display_Timing(run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes,0);
+            SendData_ToMainboard_Data(0x2B,&run_t.timer_dispTime_hours,0x01);
+	        osDelay(5);
 
         }
 	}
