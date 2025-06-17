@@ -28,6 +28,7 @@ static void sendUartData(uint8_t *data, uint8_t size)
 		if (size) {
 			while (transOngoingFlag); // 绛夊緟涓婁竴娆′紶杈撳畬鎴?
 			transOngoingFlag = 1;
+		    __HAL_UART_CLEAR_OREFLAG(&huart1);
 			HAL_UART_Transmit_IT(&huart1, data, size);
 		}
 	#else
@@ -199,6 +200,20 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 	 #endif 
     }
 }
+
+uint8_t rx_buffer[10];
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) 
+{
+    if (huart->Instance == USART1) { // 检查是哪个UART触发的错误
+        // 清除错误标志
+        __HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_OREF | UART_CLEAR_NEF | UART_CLEAR_PEF | UART_CLEAR_FEF);
+        
+        // 重新启动接收
+        UART_Start_Receive_IT(&huart1,inputBuf,1);
+    }
+}
+
 
 
 #if 0

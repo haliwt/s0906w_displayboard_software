@@ -100,6 +100,9 @@ int main(void)
    bsp_init();
    HAL_TIM_Base_Start_IT(&htim17);
 
+   // Ê¹ÄÜUSART´íÎóÖÐ¶Ï
+    __HAL_UART_ENABLE_IT(&huart1, UART_IT_ERR);
+
    #if USART1_INTERRUPT
    	 UART_Start_Receive_IT(&huart1,inputBuf,1);
    #else

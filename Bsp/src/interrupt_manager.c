@@ -2,6 +2,9 @@
 
 uint8_t inputBuf[MAX_BUFFER_SIZE];
 
+
+#if 0
+
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 {
    uint32_t temp;
@@ -29,6 +32,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 
 
 }
+#endif 
 /*******************************************************************************
 	*
 	*Function Name:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
