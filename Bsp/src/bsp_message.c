@@ -1,7 +1,7 @@
 /*
  * bsp_message.c
  *
- *  Created on: 2025�?2�?19�?
+ *  Created on: 2025�??2�??19�??
  *      Author: Administrator
  */
 #include "bsp.h"
@@ -91,7 +91,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
        
      break; 
 
-	 case 0x20: //手机定时�?机，发�?�的数据�?3个�??
+	 case 0x20: //手机定时�??机，发�?�的数据�??3个�??
 
 	     if(pdata[3]==0x0F){ //power on by smart phone APP
 
@@ -326,7 +326,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
         }
       break;
 
-      case beijing_times_data: //表示时间：小时，分，�?
+      case beijing_times_data: //表示时间：小时，分，�??
 
         if(pdata[4] == 0x03){ //数据,has three data
 
@@ -400,7 +400,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 
 	  
 
-        case 0x1D: //表示日期�? 年，月，�?
+        case 0x1D: //表示日期�?? 年，月，�??
 
         if(pdata[2] == 0x0F){ //数据
 
@@ -446,7 +446,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 			if(pdata[4]== 0x01){ // one only data 
              
 		      gpro_t.set_timer_timing_doing_value = 1;
-			  gpro_t.key_add_dec_pressed_flag =1;
+			  gpro_t.key_add_dec_pressed_flag =0;
 			  run_t.gTimer_key_timing = 0;
               run_t.gTimer_smg_blink_times =0;
 			  gpro_t.set_timer_first_smg_blink_flag=0;
@@ -454,6 +454,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 			  run_t.timer_dispTime_hours=pdata[5];
 
 			  gpro_t.mainBord_setTimer_flag = 1;
+			  gpro_t.main_settemp_value=1;
 	  
 			 	 run_t.hours_two_decade_bit    = run_t.timer_dispTime_hours / 10;
     			run_t.hours_two_unit_bit      = run_t.timer_dispTime_hours % 10;

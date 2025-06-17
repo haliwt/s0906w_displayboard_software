@@ -97,6 +97,8 @@ typedef struct _pro_t{
    uint8_t input_numbers_flag;
    uint8_t DMA_txComplete;
    uint8_t mainBord_setTimer_flag;
+   uint8_t main_settemp_value;
+   
   
 
 

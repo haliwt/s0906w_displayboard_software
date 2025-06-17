@@ -21,6 +21,7 @@ void Display_TimeColon_Blink_Fun(void);
 
 void Warning_Error_Numbers_Fun(void);
 
+void dispTemperature_dht11Value(void);
 
 
 #endif 
