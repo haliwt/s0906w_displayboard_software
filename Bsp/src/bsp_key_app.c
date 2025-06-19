@@ -63,8 +63,6 @@ void set_temperature_value(int8_t delta)
     gpro_t.g_manual_shutoff_dry_flag   = 0;
   
 
-   // SendData_ToMainboard_Data(0x2A,&new_temp,0x01);
-   // osDelay(5);
 
     TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value, run_t.set_temperature_unit_value, 0);
 	

@@ -276,9 +276,10 @@ void set_timer_fun_led_blink(void)
 *****************************************************************/
 void disp_smg_blink_set_tempeature_value(void)
 {
-     static uint8_t counter_times;
+    
+	 uint8_t send_buffer[1];
 	  //waiting for 4 s 
-	  if(run_t.gTimer_key_temp_timing > 1 && run_t.set_temperature_special_flag ==1 && (gpro_t.set_timer_timing_doing_value==0 || gpro_t.set_timer_timing_doing_value==3)){
+	  if(run_t.gTimer_key_temp_timing > 1 && run_t.set_temperature_special_flag ==1){
 			
 			
 			run_t.set_temperature_special_flag =2;
@@ -289,52 +290,29 @@ void disp_smg_blink_set_tempeature_value(void)
 	  if(run_t.set_temperature_special_flag ==2 && (gpro_t.set_timer_timing_doing_value==0 ||gpro_t.set_timer_timing_doing_value==3)){
 	  	
 	  	 
-		  if(run_t.gTimer_set_temp_times  > 0  && run_t.set_temperature_special_flag !=0xff){ // 15ms * 4 =60ms
+		  if(run_t.gTimer_set_temp_times  > 0){ // 15ms * 4 =60ms
                  run_t.gTimer_set_temp_times=0;
-                 counter_times++ ;  
-// cancel display temperature SMG number led blink function.
-//                 every_times ++;
-//          if(every_times ==1){
-//               
-//		        TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,1);
-//          }
-//		  else{
-//		  	   every_times=0;
-			  TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,0);
+               
 
-		  }
-          if(counter_times > 1){
-			 
-           		counter_times++;
+			  TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,0);
+		     send_buffer[0]=gpro_t.set_up_temperature_value;
+              SendData_ToMainboard_Data(0x2A,send_buffer,0x01);
+              osDelay(100);
+
+
           
 			 gpro_t.set_temp_value_success=1;
 			 gpro_t.g_manual_shutoff_dry_flag=0; //WT.EDIT 2025.05.28
-	         run_t.set_temperature_special_flag =0xff;
-			
-			 
-		   
-			  TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,0);
-		      
-              SendData_ToMainboard_Data(0x2A,&gpro_t.set_up_temperature_value,0x01);
-               osDelay(5);
-			
-                dispTemperature_dht11Value();
-				run_t.gTimer_display_dht11=10;
-				//osDelay(100);
+	         dispTemperature_dht11Value();
+			   run_t.gTimer_display_dht11=10;
+			   run_t.set_temperature_special_flag =0;
+				
               
              }
 		  
 	     }
 
-	  if(counter_times==3){
-		counter_times=0;
-
-	    dispTemperature_dht11Value();
-		run_t.gTimer_display_dht11=10;
-		 osDelay(300);
-
-
-	  }
+	
 
 }
 

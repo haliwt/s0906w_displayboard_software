@@ -17,7 +17,7 @@
 #include "bsp_led.h"
 #include "bsp_fan.h"
 #include "bsp_tm1639.h"
-#include "bsp_display_dynamic.h"
+#include "bsp_dht11.h"
 #include "bsp_display.h"
 #include "interrupt_manager.h"
 #include "bsp_delay.h"

@@ -164,7 +164,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 	   if(pdata[4]== 0x01 && run_t.gPower_On == power_on){
 
             run_t.gDry =1 ;//&& run_t.gPlasma ==1  && run_t.gUltransonic==1
-            
+            LED_DRY_ON();
         }
         else if(pdata[4] == 0x0){
 

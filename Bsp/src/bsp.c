@@ -126,12 +126,7 @@ void power_on_run_handler(void)
                    Set_TimerTiming_Number_Value();
                    
               }
-              else if((gpro_t.set_timer_timing_doing_value == 0 ||gpro_t.set_timer_timing_doing_value == 3 )&&  run_t.set_temperature_special_flag   >0 &&  run_t.set_temperature_special_flag != 0xff ){
-
-                   disp_smg_blink_set_tempeature_value();
-	              
-						
-             }
+             
              else{
 
               switch(step_state){

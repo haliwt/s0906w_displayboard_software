@@ -1,5 +1,5 @@
-#ifndef __BSP_DISPLAY_DYNAMIC_H
-#define __BSP_DISPLAY_DYNAMIC_H
+#ifndef __BSP_DHT11_H
+#define __BSP_DHT11_H
 #include "main.h"
 
 typedef enum {

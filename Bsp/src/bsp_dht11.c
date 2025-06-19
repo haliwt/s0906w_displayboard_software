@@ -13,21 +13,11 @@ void (*display_fan_speed_value)(uint8_t fan_level);
 
 
 
-//static void DisplayPanel_DHT11_Value(void);
+
 
 static void Display_Works_Time_Fun(void);
 static void WorksTime_DonotDisplay_Fun(void);
 static void Timer_Timing_Donot_Display(void);
-
-//static void Smg_DisplayFan_Level_Value_Fun(uint8_t fan_level);
-
-
-//
-//void Smg_DisplayFan_Speed_Level_Init(void)
-//{
-//      Smg_DisplayFan_Leve(Smg_DisplayFan_Level_Value_Fun);
-//
-//}
 
 
 
@@ -67,12 +57,18 @@ void disp_dht11_value(void)
 {
 
   if(run_t.gTimer_display_dht11 > 3 && (gpro_t.set_timer_timing_doing_value==0||gpro_t.set_timer_timing_doing_value==3)\
-		  && run_t.set_temperature_special_flag !=0xff){
+		  && run_t.set_temperature_special_flag==0){
 	    run_t.gTimer_display_dht11=0;
        	Display_DHT11_Value();
        
      
-	}
+  }
+  else if((gpro_t.set_timer_timing_doing_value == 0 ||gpro_t.set_timer_timing_doing_value == 3 )\
+		  && (run_t.set_temperature_special_flag ==1 || run_t.set_temperature_special_flag ==2)){
+
+        disp_smg_blink_set_tempeature_value();
+
+  }
 
 }
 
