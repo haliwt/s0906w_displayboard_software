@@ -1,7 +1,7 @@
 /*
  * bsp_key_app.h
  *
- *  Created on: 2025å¹´2æœˆ19æ—¥
+ *  Created on: 2025å¹?2æœ?19æ—?
  *      Author: Administrator
  */
 
@@ -28,7 +28,7 @@ extern KEY_T_TYPEDEF key_t;
 
 void process_keys(void) ;
 
-void SetDataTemperatureValue(void);
+
 
 void mode_key_handler(void);
 

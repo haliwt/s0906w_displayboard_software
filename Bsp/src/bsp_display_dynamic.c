@@ -66,7 +66,7 @@ static void DisplayPanel_DHT11_Value(void)
 void disp_dht11_value(void)
 {
 
-  if(run_t.gTimer_display_dht11 > 9 && (gpro_t.set_timer_timing_doing_value==0||gpro_t.set_timer_timing_doing_value==3)){
+  if(run_t.gTimer_display_dht11 > 3 && (gpro_t.set_timer_timing_doing_value==0||gpro_t.set_timer_timing_doing_value==3)){
 	    run_t.gTimer_display_dht11=0;
        	Display_DHT11_Value();
        
@@ -366,7 +366,7 @@ void Display_SmgTiming_Value(void)
 				   run_t.timer_dispTime_minutes =59;
 				
 				   uint8_t dataToSend[3] = {run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes, run_t.gTimer_timer_seconds_counter}; // 要发送的 3 个数�?
-           			SendData_ToMainboard_Data(0x5C, dataToSend, 3); // cmd=0x1A, 数据长度=3
+           		  SendData_ToMainboard_Data(0x5C, dataToSend, 3); // cmd=0x1A, 数据长度=3
                     osDelay(5);
 		         }
 

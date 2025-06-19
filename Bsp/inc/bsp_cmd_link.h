@@ -37,7 +37,7 @@ void SendData_Set_Command(uint8_t cmd,uint8_t data);
 
 void SendData_Temp_Data(uint8_t tdata);
 
-void SendData_ToMainboard_Data(uint8_t cmd,uint8_t *tdata,uint8_t datalen);
+void SendData_ToMainboard_Data(uint8_t cmd,uint8_t *pdata,uint8_t datalen);
 
 
 void SendWifiData_Answer_Cmd(uint8_t cmd ,uint8_t data);

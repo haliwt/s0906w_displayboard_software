@@ -142,6 +142,7 @@ uint8_t KEY_Scan(void)
 void Set_TimerTiming_Number_Value(void)
 {
   static uint8_t default_numbers =0xff;
+  uint8_t senddata[1];
    if(gpro_t.set_timer_timing_doing_value==1){
    //set timer timing value 
     if(run_t.gTimer_key_timing > 3){
@@ -194,7 +195,8 @@ void Set_TimerTiming_Number_Value(void)
 			}
 
 			Display_Timing(run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes,0);
-            SendData_ToMainboard_Data(0x2B,&run_t.timer_dispTime_hours,0x01);
+			senddata[0]=run_t.timer_dispTime_hours;
+            SendData_ToMainboard_Data(0x2B,senddata,0x01);
 	        osDelay(5);
 
 		}
@@ -203,7 +205,8 @@ void Set_TimerTiming_Number_Value(void)
 			gpro_t.set_timer_timing_value_success  = 0;
 			run_t.timer_dispTime_hours=0;
 			Display_Timing(run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes,0);
-            SendData_ToMainboard_Data(0x2B,&run_t.timer_dispTime_hours,0x01);
+			senddata[0]=run_t.timer_dispTime_hours;
+            SendData_ToMainboard_Data(0x2B,senddata,0x01);
 	        osDelay(5);
 
         }
@@ -300,36 +303,38 @@ void disp_smg_blink_set_tempeature_value(void)
 			  TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,0);
 
 		  }
-
-
-		  
-       
-   
-
-           if(counter_times > 1){
+          if(counter_times > 1){
 			 
-           		counter_times=0;
+           		counter_times++;
           
 			 gpro_t.set_temp_value_success=1;
-			 
+			 gpro_t.g_manual_shutoff_dry_flag=0; //WT.EDIT 2025.05.28
 	         run_t.set_temperature_special_flag =0xff;
-			  run_t.gTimer_temp_delay = 70; //at once shut down ptc  funciton
-			  run_t.gTimer_display_dht11 = 90;
+			
+			 
 		   
 			  TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,0);
 		      
-			  Display_DHT11_Value();
-              gpro_t.g_manual_shutoff_dry_flag=0; //WT.EDIT 2025.05.28
-
-		        SendData_ToMainboard_Data(0x2A,&gpro_t.set_up_temperature_value,0x01);
-                osDelay(5);
+              SendData_ToMainboard_Data(0x2A,&gpro_t.set_up_temperature_value,0x01);
+               osDelay(5);
 			
                 dispTemperature_dht11Value();
+				run_t.gTimer_display_dht11=10;
+				//osDelay(100);
               
              }
 		  
 	     }
 
+	  if(counter_times==3){
+		counter_times=0;
+
+	    dispTemperature_dht11Value();
+		run_t.gTimer_display_dht11=10;
+		 osDelay(300);
+
+
+	  }
 
 }
 

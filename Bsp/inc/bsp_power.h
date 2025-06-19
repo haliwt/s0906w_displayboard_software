@@ -146,7 +146,7 @@ typedef struct __RUN{
  
    /***/
    uint8_t 	gTimer_numbers_one_two_blink;
-   uint8_t gTimer_temp_delay;
+
    volatile uint8_t set_temperature_decade_value;
    volatile   uint8_t set_temperature_unit_value;
    volatile uint8_t gTimer_time_colon;

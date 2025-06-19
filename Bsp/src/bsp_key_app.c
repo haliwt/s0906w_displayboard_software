@@ -13,7 +13,7 @@ KEY_T_TYPEDEF key_t;
 static void handle_mode_key_long_press(void);
 
 
-uint8_t  set_temp_flag;
+
 
 
 typedef struct {
@@ -28,18 +28,7 @@ typedef struct {
  * 
  * 
  **********************************************************************************/
-void SetDataTemperatureValue(void)
-{
-    if(set_temp_flag ==1){
-	 set_temp_flag++;
 
-     //SendData_Tx_Data(0x11,gpro_t.set_up_temperature_value);
-     SendData_ToMainboard_Data(0x2A,&gpro_t.set_up_temperature_value,0x01);
-     osDelay(5);
-	}  
-
-
-}
 
 /*********************************************************************************
  * 
@@ -72,7 +61,7 @@ void set_temperature_value(int8_t delta)
     run_t.set_temperature_special_flag = 1;
     run_t.gTimer_key_temp_timing       = 0;
     gpro_t.g_manual_shutoff_dry_flag   = 0;
-    set_temp_flag                      = 1;
+  
 
    // SendData_ToMainboard_Data(0x2A,&new_temp,0x01);
    // osDelay(5);
