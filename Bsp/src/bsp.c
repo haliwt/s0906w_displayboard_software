@@ -137,13 +137,6 @@ void power_on_run_handler(void)
 					break;
 
 					case 1:
-
-						 
-               			// disp_dht11_value();
-                       
-				        step_state=2;
-	                    
-				   break;
                     
                     case 2: //display 1:   timing times  2: timer times.
 
