@@ -3,6 +3,9 @@
 
 
 
+uint8_t  copy_hum_value ;
+uint8_t  copy_temp_value ;
+
 //static void TimeColon_Smg_Blink_Fun(void);
 
 
@@ -17,9 +20,8 @@
 void Display_DHT11_Value(void)
 {
     
-  static uint8_t hum1,hum2,copy_hum_value; 
-  static uint8_t temp1,temp2,copy_temp_value;
-
+  static uint8_t hum1,hum2;
+  static uint8_t temp1,temp2;
 
 
     if(run_t.gReal_humtemp[0] !=0 && run_t.gReal_humtemp[1]!=0){
@@ -72,12 +74,22 @@ void dispTemperature_dht11Value(void)
   static uint8_t temp1,temp2;
 
 	
+   if(run_t.gReal_humtemp[1]!=0){
+		 temp1 = run_t.gReal_humtemp[1] /10;//run_t.gReal_humtemp[1]/10 ;  // temperature
+	     temp2 = run_t.gReal_humtemp[1] % 10;//run_t.gReal_humtemp[1]%10;
+		TM1639_Write_2bit_TempData(temp1,temp2);
 
-	temp1 = run_t.gReal_humtemp[1] /10;//run_t.gReal_humtemp[1]/10 ;  // temperature
-	temp2 = run_t.gReal_humtemp[1] % 10;//run_t.gReal_humtemp[1]%10;
 
- 
-	TM1639_Write_2bit_TempData(temp1,temp2);
+
+    }
+    else{
+         
+		   temp1 = copy_temp_value /10;//run_t.gReal_humtemp[1]/10 ;  // temperature
+		   temp2 = copy_temp_value% 10;//run_t.gReal_humtemp[1]%10;
+
+	       TM1639_Write_2bit_TempData(temp1,temp2);
+
+	}
     
 
 	
