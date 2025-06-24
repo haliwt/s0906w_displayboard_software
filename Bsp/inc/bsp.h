@@ -18,7 +18,7 @@
 #include "bsp_fan.h"
 #include "bsp_tm1639.h"
 #include "bsp_dht11.h"
-#include "bsp_display.h"
+#include "bsp_dht11_app.h"
 #include "interrupt_manager.h"
 #include "bsp_delay.h"
 #include "bsp_wifi.h"

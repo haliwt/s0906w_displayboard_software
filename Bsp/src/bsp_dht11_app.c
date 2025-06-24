@@ -17,8 +17,8 @@
 void Display_DHT11_Value(void)
 {
     
-  static uint8_t hum1,hum2; 
-  static uint8_t temp1,temp2;
+  static uint8_t hum1,hum2,copy_hum_value; 
+  static uint8_t temp1,temp2,copy_temp_value;
 
 	hum1 =  run_t.gReal_humtemp[0]/10;  //Humidity 
 	hum2 =  run_t.gReal_humtemp[0]%10;
@@ -26,10 +26,30 @@ void Display_DHT11_Value(void)
 	temp1 = run_t.gReal_humtemp[1] /10;//run_t.gReal_humtemp[1]/10 ;  // temperature
 	temp2 = run_t.gReal_humtemp[1] % 10;//run_t.gReal_humtemp[1]%10;
 
- 
-	TM1639_Write_2bit_TempData(temp1,temp2);
+    if(run_t.gReal_humtemp[0] !=0 && run_t.gReal_humtemp[1]!=0){
+	   TM1639_Write_2bit_TempData(temp1,temp2);
     
-	TM1639_Write_2bit_HumData(hum1,hum2);
+	   TM1639_Write_2bit_HumData(hum1,hum2);
+	   
+	   copy_hum_value = run_t.gReal_humtemp[0];
+	   copy_temp_value = run_t.gReal_humtemp[1];
+
+    }
+	else if(run_t.gReal_humtemp[0] ==0 && run_t.gReal_humtemp[1]!=0){
+
+	       
+		       hum1 =  copy_hum_value/10;  //Humidity 
+			   hum2 =  copy_hum_value%10;
+		   
+			   temp1 = copy_temp_value /10;//run_t.gReal_humtemp[1]/10 ;  // temperature
+			   temp2 = copy_temp_value% 10;//run_t.gReal_humtemp[1]%10;
+
+	       TM1639_Write_2bit_TempData(temp1,temp2);
+		
+		   TM1639_Write_2bit_HumData(hum1,hum2);
+
+
+	}
 	
 
 
@@ -46,11 +66,10 @@ void Display_DHT11_Value(void)
 void dispTemperature_dht11Value(void)
 {
     
-  //static uint8_t hum1,hum2; 
+
   static uint8_t temp1,temp2;
 
-	//hum1 =  run_t.gReal_humtemp[0]/10;  //Humidity 
-	//hum2 =  run_t.gReal_humtemp[0]%10;
+	
 
 	temp1 = run_t.gReal_humtemp[1] /10;//run_t.gReal_humtemp[1]/10 ;  // temperature
 	temp2 = run_t.gReal_humtemp[1] % 10;//run_t.gReal_humtemp[1]%10;
@@ -58,7 +77,7 @@ void dispTemperature_dht11Value(void)
  
 	TM1639_Write_2bit_TempData(temp1,temp2);
     
-	//TM1639_Write_2bit_HumData(hum1,hum2);
+
 	
 
 

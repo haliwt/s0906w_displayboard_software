@@ -1,5 +1,5 @@
-#ifndef __BSP_DISPLAY_H_
-#define __BSP_DISPLAY_H_
+#ifndef __BSP_DHT11_APP_H_
+#define __BSP_DHT11_APP_H_
 
 #include "main.h"
 

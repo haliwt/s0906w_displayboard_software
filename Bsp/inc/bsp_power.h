@@ -141,8 +141,8 @@ typedef struct __RUN{
 
   
 	
-   uint8_t gReal_humtemp[2];
-   uint8_t rx_mb_data_tag;
+   volatile   uint8_t gReal_humtemp[2];
+    uint8_t rx_mb_data_tag;
  
    /***/
    uint8_t 	gTimer_numbers_one_two_blink;

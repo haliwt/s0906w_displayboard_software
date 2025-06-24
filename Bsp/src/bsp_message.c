@@ -30,7 +30,7 @@ static void copy_cmd_data_from_mainboard(uint8_t *pdata);
 void receive_data_from_mainboard(uint8_t *pdata)
 {
     
-   static uint8_t power_on_counter;
+  // static uint8_t power_on_counter;
    uint8_t temp_value;
     switch(pdata[2]){
 
@@ -81,7 +81,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 				run_t.gPower_On = power_off;
                 run_t.gRunCommand_label =RUN_NULL;
 			    temp_value = 0;
-			     SendData_CopyCmd_Data(0x01,& temp_value,0);
+			    SendData_CopyCmd_Data(0x01,&temp_value,0);
 				 osDelay(5);
 
 			}
@@ -294,18 +294,12 @@ void receive_data_from_mainboard(uint8_t *pdata)
         if(pdata[3]==0x0F){
         if(pdata[4] == 0x02){ //数据,two 
             
-             if(pdata[5] !=0){
-			    run_t.gReal_humtemp[0] = pdata[5] ;//humidity value 
+             
+		  run_t.gReal_humtemp[0] = pdata[5] ;//humidity value 
 
-             }
-           
-             run_t.gReal_humtemp[1] = pdata[6];
+             
+          run_t.gReal_humtemp[1] = pdata[6];
 
-			 if(run_t.gPower_On == power_on && power_on_counter < 10){
-			 	 power_on_counter++;
-		          Display_DHT11_Value();
-
-			 }
 		
 		   
 

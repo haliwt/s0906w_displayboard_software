@@ -107,7 +107,7 @@ void power_on_run_handler(void)
 
       case SPECIAL_DISP:
 
-              if(gpro_t.mode_key_shot_flag ==1){
+              if(gpro_t.mode_key_shot_flag ==1){ //logic : only display mode key set up timing value .
 
                   if(gpro_t.gTimer_disp_moke_switch <  3){
 				  	

@@ -156,7 +156,7 @@ void Set_TimerTiming_Number_Value(void)
 
     if(gpro_t.set_timer_timing_doing_value==2){
     	gpro_t.set_timer_timing_doing_value++;
-		if(gpro_t.set_timer_timing_value_success  == TIMER_SUCCESS && gpro_t.key_add_dec_pressed_flag ==0 && gpro_t.main_settemp_value==0){
+		if(gpro_t.set_timer_timing_value_success  == TIMER_SUCCESS && gpro_t.key_add_dec_pressed_flag ==0 && gpro_t.main_settemp_value==0){//only display don't set timer value .
              run_t.hours_two_decade_bit = run_t.timer_dispTime_hours/10,
         	 run_t.hours_two_unit_bit  = run_t.timer_dispTime_hours %10;
         	 //run_t.minutes_one_decade_bit = run_t.timer_dispTime_minutes /10;
@@ -164,7 +164,7 @@ void Set_TimerTiming_Number_Value(void)
         	 Display_Timing(run_t.timer_dispTime_hours,run_t.timer_dispTime_minutes,0);
 
 		}
-		else if(gpro_t.set_timer_timing_value_success  == TIMER_SUCCESS && gpro_t.key_add_dec_pressed_flag ==0 && gpro_t.main_settemp_value ==1){
+		else if(gpro_t.set_timer_timing_value_success  == TIMER_SUCCESS && gpro_t.key_add_dec_pressed_flag ==0 && gpro_t.main_settemp_value ==1){//not only display ,but set time value 
              run_t.hours_two_decade_bit = run_t.timer_dispTime_hours/10,
         	 run_t.hours_two_unit_bit  = run_t.timer_dispTime_hours %10;
 			 run_t.timer_dispTime_minutes =0;
@@ -175,7 +175,7 @@ void Set_TimerTiming_Number_Value(void)
 			
 
 		}
-		else if(gpro_t.set_timer_timing_value_success  == WORKS_TIMING && gpro_t.key_add_dec_pressed_flag ==0 && gpro_t.main_settemp_value ==1){
+		else if(gpro_t.set_timer_timing_value_success  == WORKS_TIMING && gpro_t.key_add_dec_pressed_flag ==0 && gpro_t.main_settemp_value ==1){//not only display ,but set time value 
           
             gpro_t.main_settemp_value =0;
 			gpro_t.set_timer_timing_value_success= 0;
