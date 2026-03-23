@@ -47,6 +47,7 @@ void SendData_CopyCmd_Data(uint8_t cmd,uint8_t *pdata,uint8_t mycmd);
 
 //void USART1_Cmd_Error_Handler(void);
 
+void SendData_PowerOnOff(uint8_t index);
 
 #endif 
 

@@ -108,7 +108,7 @@ void freeRTOS_Handler(void)
 static void vTaskDecoderPro(void *pvParameters)
 {
     BaseType_t xResult;
-	//const TickType_t xMaxBlockTime = pdMS_TO_TICKS(5000); /* 设置�?大等待时间为30ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(3000); /* 设置�?大等待时间为30ms */
 	uint32_t ulValue;
 	
 
@@ -119,7 +119,7 @@ static void vTaskDecoderPro(void *pvParameters)
 	xResult = xTaskNotifyWait(0x00000000,
 								  0xFFFFFFFF,     /* Reset the notification value to 0 on */
 								&ulValue,        /* 保存ulNotifiedValue到变量ulValue�? */
-								portMAX_DELAY);//portMAX_DELAY);  /* 阻塞时间30ms，释放CUP控制�?,给其它任务执行的权限*/
+								xMaxBlockTime);//portMAX_DELAY);  /* 阻塞时间30ms，释放CUP控制�?,给其它任务执行的权限*/
 
 		if( xResult == pdPASS )
 		{
@@ -314,12 +314,12 @@ void AppTaskCreate (void)
                  "vTaskDecoderPro",  		/* 任务�?1�?7    */
                  128,         		/* stack大小，单位word，也就是4字节 */
                  NULL,        		/* 任务参数  */
-                 2,           		/* 任务优先�?1�?7 数��越小优先级越低，这个跟uCOS相反 */
+                 3,           		/* 任务优先�?1�?7 数��越小优先级越低，这个跟uCOS相反 */
                  &xHandleTaskDecoderPro); /* 任务句柄  */
 
   xTaskCreate( vTaskRunPro,    		/* 任务函数  */
                  "vTaskRunPro",  		/* 任务�?1�?7    */
-                 128,         		/* stack大小，单位word，也就是4字节 */
+                 256,         		/* stack大小，单位word，也就是4字节 */
                  NULL,        		/* 任务参数  */
                  1,           		/* 任务优先�?1�?7 数��越小优先级越低，这个跟uCOS相反 */
                  &xHandleTaskRunPro); /* 任务句柄  */
@@ -328,7 +328,7 @@ void AppTaskCreate (void)
                  "vTaskStart",   		/* 任务�?1�?7    */
                  128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 3,              		/* 任务优先�?1�?7 数��越小优先级越低，这个跟uCOS相反 */
+                 2,              		/* 任务优先�?1�?7 数��越小优先级越低，这个跟uCOS相反 */
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 

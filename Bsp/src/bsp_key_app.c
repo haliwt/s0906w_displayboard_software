@@ -138,11 +138,11 @@ void handle_key(KeyHandler *handler)
 void power_key_handler(void) 
 {
     if(run_t.gPower_On == power_off){
-        SendData_PowerOnOff(1); // power on
-        osDelay(5); 
+        SendData_PowerOnOff(1);//SendData_PowerOnOff(1); // power on
+        osDelay(100); 
     } else {
         SendData_PowerOnOff(0); // power off
-        osDelay(5);
+        osDelay(100);
     }
     
 }
@@ -160,13 +160,13 @@ void plasma_key_handler(void)
         if(run_t.gPlasma == 1){
             run_t.gPlasma = 0;
             SendData_Set_Command(plasma_cmd, 0x00);
-		    osDelay(5);
+		    osDelay(100);
             LED_PLASMA_OFF();
             gpro_t.send_ack_cmd = check_ack_plasma_off;
         } else {
             run_t.gPlasma = 1;
             SendData_Set_Command(plasma_cmd, 0x01);
-			osDelay(5);
+			osDelay(100);
             LED_PLASMA_ON();
             gpro_t.send_ack_cmd = check_ack_plasma_on;
         }
@@ -186,13 +186,13 @@ void dry_key_handler(void)
    // if(gpro_t.set_timer_timing_doing_value == 0 || gpro_t.set_timer_timing_doing_value == 3) {
         if(run_t.gDry == 0) {
             SendData_Set_Command(dry_cmd, 0x01);//sendCommandAndAck(dry_cmd, 0x01, check_ack_ptc_on);
-			osDelay(5);
+			osDelay(100);
             run_t.gDry = 1;
             gpro_t.g_manual_shutoff_dry_flag = 0;
             LED_DRY_ON();
         } else {
             SendData_Set_Command(dry_cmd, 0x00);//sendCommandAndAck(dry_cmd, 0x00, check_ack_ptc_off);
-			osDelay(5);
+			osDelay(100);
             run_t.gDry = 0;
             gpro_t.g_manual_shutoff_dry_flag = 1; // 手动关闭后不再自动开�?
             LED_DRY_OFF();
@@ -213,7 +213,7 @@ void mouse_key_handler(void)
         if(run_t.gMouse == 0) {
             // �?�? Mouse 功能
             SendData_Set_Command(mouse_cmd, 0x01);
-            osDelay(5);
+            osDelay(100);
             run_t.gMouse = 1;
             LED_MOUSE_ON();
             gpro_t.send_ack_cmd = check_ack_mouse_on;  // 假设有对应的反馈类型
@@ -222,7 +222,7 @@ void mouse_key_handler(void)
         } else if(run_t.gMouse == 1) {
             // 关闭 Mouse 功能
             SendData_Set_Command(mouse_cmd, 0x00);
-            osDelay(5);
+            osDelay(100);
             run_t.gMouse = 0;
             LED_MOUSE_OFF();
             gpro_t.send_ack_cmd = check_ack_mouse_off;  // 假设有对应的反馈类型
@@ -250,13 +250,13 @@ void key_add_fun(void)
 	    case 3:
 		case 0:  // 设置温度增加
             SendData_Buzzer();
-		    osDelay(5);
+		    osDelay(50);
             set_temperature_value(+1);
             break;
 
         case 1:  // 设置定时增加（每次加60分钟�?
             SendData_Buzzer();
-			osDelay(5);
+			osDelay(50);
             run_t.gTimer_key_timing = 0;
             gpro_t.key_add_dec_pressed_flag = 1;
             adjust_timer_minutes(1);  // 固定每次�?60分钟
@@ -283,13 +283,13 @@ void key_dec_fun(void)
         case 3:
 		case 0:  // 设置温度减少
             SendData_Buzzer();
-		    osDelay(5);
+		    osDelay(50);
             set_temperature_value(-1);
             break;
 
         case 1:  // 设置定时减少（每次减60分钟�?
             SendData_Buzzer();
-		    osDelay(5);
+		    osDelay(50);
 			run_t.gTimer_key_timing = 0;
             gpro_t.key_add_dec_pressed_flag = 1;
             adjust_timer_minutes(-1);  // 固定每次�?60分钟
@@ -334,7 +334,7 @@ void mode_key_handler(void)
            gpro_t.mode_key_shot_flag = 1;
 		   gpro_t.gTimer_disp_moke_switch=0;
 		   SendData_Buzzer();
-		   osDelay(5);
+		   osDelay(50);
 
 	}
 	else if(MODEL_KEY_VALUE() == KEY_UP  && gpro_t.mode_Key_long_counter ==220){
@@ -354,7 +354,7 @@ static void handle_mode_key_long_press(void)
     key_t.key_mode_flag = 8;
 
     SendData_Buzzer();
-    osDelay(5);
+    osDelay(50);
     
 }
 
@@ -382,7 +382,7 @@ void wifi_mode_key_handler(void)
         run_t.wifi_connect_state_flag = wifi_connect_null;
         run_t.gTimer_wifi_connect_counter =0; //120s counte start
         SendData_Set_Command(wifi_cmd,0x01);
-        osDelay(5);
+        osDelay(100);
         key_t.key_wifi_flag =0;
 	
 
@@ -473,7 +473,7 @@ void process_keys(void)
         if(key_t.key_wifi_flag > 130) {
             key_t.key_wifi_flag = 200;
             SendData_Buzzer();
-			osDelay(5);
+			osDelay(10);
         }
     }
 

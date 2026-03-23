@@ -2,7 +2,7 @@
 
 // 定义宏，提高代码可读�?
 #define FRAME_HEADER        0xA5
-#define DEVICE_NUMBER       0x02
+#define DEVICE_NUMBER       0x01
 #define FRAME_END           0xFE
 #define NO_DATA             0x00
 #define HAS_DATA            0x0F
@@ -97,6 +97,28 @@ static void fillFrame_copy(uint8_t cmd, uint8_t frameType, uint8_t *data, uint8_
     }
 }
 
+void SendData_PowerOnOff(uint8_t index)
+{
+	
+   //crc=0x55;
+	outputBuf[0]=0xA5; //display board head = 0xA5
+	outputBuf[1]= DEVICE_NUMBER; //display device Number:is 0x01
+	outputBuf[2]=0x01; // command type = 0x01 ->power on or power off 
+	outputBuf[3]=index; // command order -> 01 - power on , 00- power off
+	outputBuf[4]=0x00; // data is length: 00 ->don't data 
+	outputBuf[5]=0xFE; // frame of end code -> 0xFE.
+	
+	outputBuf[6] = bcc_check(outputBuf,6);
+	transferSize=7;
+	sendUartData(outputBuf, transferSize);//usart1_dma_send(outputBuf,transferSize);
+	// if(transferSize)
+	// {
+	// 	while(transOngoingFlag);
+	// 	transOngoingFlag=1;
+	// 	//HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
+	// }
+	
+}
 
 /****************************************************************************************************
  * Function Name: SendData_Buzzer
@@ -105,10 +127,15 @@ static void fillFrame_copy(uint8_t cmd, uint8_t frameType, uint8_t *data, uint8_
  * Return Ref: �?
  ****************************************************************************************************/
 void SendData_Buzzer(void) {
-    uint8_t cmd = 0x06; // 蜂鸣器命�?
-    uint8_t cmdData = 0x01; // 打开蜂鸣�?
-    fillFrame(cmd,NO_DATA,&cmdData,0);
-	transferSize=8;
+    outputBuf[0]=0xA5; //display board head = 0xA5
+	outputBuf[1]= DEVICE_NUMBER; //display device Number:is 0x01
+	outputBuf[2]=0x06; // command type = 0x06 ->buzzer sound open or not
+	outputBuf[3]=0x01; // command order -> 01 - buzzer sound done, 00- don't buzzer sound 
+	outputBuf[4]=0x00; // data is length: 00 ->don't data 
+	outputBuf[5]=0xFE; // frame of end code -> 0xFE.
+	
+	outputBuf[6] = bcc_check(outputBuf,6);
+	transferSize=7;
     sendUartData(outputBuf, transferSize);
 }
 
@@ -119,8 +146,14 @@ void SendData_Buzzer(void) {
  * Return Ref: �?
  ****************************************************************************************************/
 void SendData_Set_Command(uint8_t cmd, uint8_t cmdData) {
-    fillFrame(cmd,NO_DATA,&cmdData, 0);
-	transferSize=8;
+    outputBuf[0]=0xA5; //display board head = 0xA5
+	outputBuf[1]= DEVICE_NUMBER; //display device Number:is 0x01
+	outputBuf[2]=cmd; // command type = 0x06 ->buzzer sound open or not
+	outputBuf[3]= cmdData; // command order -> 01 - buzzer sound done, 00- don't buzzer sound 
+	outputBuf[4]=0x00; // data is length: 00 ->don't data 
+	outputBuf[5]=0xFE; // frame of end code -> 0xFE.
+    outputBuf[6] = bcc_check(outputBuf,6);
+    transferSize=7;
     sendUartData(outputBuf, transferSize);
 }
 
@@ -143,8 +176,16 @@ void SendData_Tx_Data(uint8_t cmd, uint8_t data) {
  * Return Ref: �?
  ****************************************************************************************************/
 void SendData_Temp_Data(uint8_t tdata) {
-    fillFrame(0x1A, HAS_DATA, &tdata, 1);
-	transferSize=9;
+    outputBuf[0]=0xA5; //display board head = 0xA5
+	outputBuf[1]= DEVICE_NUMBER; //display device Number:is 0x01
+	outputBuf[2]=0x1A; // command type = 0x1A -> temperature of value 
+	outputBuf[3]=0x0f; // command order -> 0x0f -> is data , don't order.
+	outputBuf[4]=0x01; // data is length: 00 ->don't data 
+	outputBuf[5]=tdata; // frame of end code -> 0xFE.
+	outputBuf[6]=0xFE; // frame of end code -> 0xFE.
+    outputBuf[7] = bcc_check(outputBuf,7);
+		
+	transferSize=8;
     sendUartData(outputBuf, transferSize);
 }
 
@@ -168,8 +209,16 @@ void SendData_ToMainboard_Data(uint8_t cmd,uint8_t *pdata,uint8_t datalen)
  ****************************************************************************************************/
 void SendData_CopyCmd_Data(uint8_t cmd,uint8_t *pdata,uint8_t datalen) 
 {
-    fillFrame_copy(cmd, HAS_DATA, pdata, datalen);
-	transferSize=8+datalen;
+        outputBuf[0]=0xA5; //display board head = 0xA5
+        outputBuf[1]=DEVICE_NUMBER; //display device Number:is 0x01
+        outputBuf[2]=0xFF; // answer or copy command
+        outputBuf[3]= cmd; // 0x0F : is data ,don't command order.
+        outputBuf[4]=pdata[0]; // don't data ,onlay is command order,recieve data is 1byte .
+       
+        outputBuf[5] = 0xFE; //frame is end of byte.
+        outputBuf[6] = bcc_check(outputBuf,6);
+        
+        transferSize=7;
     sendUartData(outputBuf, transferSize);
 }
 
@@ -179,11 +228,11 @@ void SendData_CopyCmd_Data(uint8_t cmd,uint8_t *pdata,uint8_t datalen)
  * Input Ref: index - 电源状�?? (0: �?, 1: �?)
  * Return Ref: �?
  ****************************************************************************************************/
-void SendData_PowerOnOff(uint8_t index) {
-    fillFrame(0x01,NO_DATA,&index,0);
-	transferSize=8;
-    sendUartData(outputBuf, transferSize);
-}
+//void SendData_PowerOnOff(uint8_t index) {
+//    fillFrame(0x01,NO_DATA,&index,0);
+//	transferSize=8;
+//    sendUartData(outputBuf, transferSize);
+//}
 
 /****************************************************************************************************
  * Function Name: HAL_UART_TxCpltCallback

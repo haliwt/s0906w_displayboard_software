@@ -85,23 +85,7 @@ void TM1639_Clear(void);                     // 清空显示
 void TM1639_Write_Digit_Full(uint8_t addr_h, uint8_t addr_l, uint8_t data); // 写入完整的一位数码管
 void TM1639_All_Off(void);
 
-#if 0
 
-void TM1639_Write_Half_Digit(uint8_t addr,uint8_t data);
-
-void TM1639_Display_H(uint8_t position);     // 在指定位置显示字母H
-void TM1639_Display_Temperature(int8_t temp); // 显示温度值（-9�??99℃）
-void TM1639_Display_Humidity(uint8_t humi);  // 显示湿度值（0-99%RH�??
-void TM1639_Display_Decimal(uint16_t num, uint8_t dot_pos); // 显示带小数点的数�??
-             // 关闭�??有显示（包括数码管和LED�??
-
-
-void disp_decimal_point(uint8_t idata);
-
-
-void TM1639_Display_3_Digit(uint8_t num);   // 显示3位数�??
-
-#endif
 
 #endif 
 
