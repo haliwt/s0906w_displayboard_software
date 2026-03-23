@@ -291,7 +291,7 @@ static void vTaskStart(void *pvParameters)
             	 if(run_t.gPower_On == power_on){
                    
             	      key_t.key_mouse_flag =1;
-                    key_t.key_wifi_flag =0;
+                      key_t.key_wifi_flag =0;
                      }
             	                 
             }

@@ -295,7 +295,7 @@ void disp_smg_blink_set_tempeature_value(void)
                
 
 			  TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,0);
-		     send_buffer[0]=gpro_t.set_up_temperature_value;
+		      send_buffer[0]=gpro_t.set_up_temperature_value;
               SendData_ToMainboard_Data(0x2A,send_buffer,0x01);
               osDelay(50);
 
@@ -307,9 +307,26 @@ void disp_smg_blink_set_tempeature_value(void)
 			  run_t.gTimer_display_dht11=10;
 			 
 			   run_t.set_temperature_special_flag =0;
+
+			   	if(gpro_t.set_up_temperature_value <= run_t.gReal_humtemp[1]){// && gpro_t.smart_phone_turn_off_ptc_flag ==0){
+             	run_t.gDry =0 ;//&& run_t.gPlasma ==1  && run_t.gUltransonic==1
+				LED_DRY_OFF();
+			    //SendData_Set_Command(0x22, 0x0);//sendCommandAndAck(dry_cmd, 0x01, check_ack_ptc_on);
+			    //osDelay(100);
+            
+			    
+	           }
+	           else{
+			   run_t.gDry =1 ;//&& run_t.gPlasma ==1  && run_t.gUltransonic==1
+			   LED_DRY_ON();
+			   //SendData_Set_Command(0x22, 0x01);//sendCommandAndAck(dry_cmd, 0x01, check_ack_ptc_on);
+			  // osDelay(100);
+
+				}
 				
               
              }
+		  
 		  
 	     }
 
