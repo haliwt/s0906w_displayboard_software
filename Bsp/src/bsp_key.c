@@ -297,7 +297,7 @@ void disp_smg_blink_set_tempeature_value(void)
 			  TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,0);
 		     send_buffer[0]=gpro_t.set_up_temperature_value;
               SendData_ToMainboard_Data(0x2A,send_buffer,0x01);
-              osDelay(5);
+              osDelay(50);
 
 
           

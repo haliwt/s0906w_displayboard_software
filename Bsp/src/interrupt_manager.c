@@ -85,6 +85,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	  gpro_t.gTimer_wifi_led_blink ++;
 	  gpro_t.gTimer_disp_moke_switch++;
 
+	  gpro_t.gTimer_temp_compare_value++;
+
        
        
 	 }

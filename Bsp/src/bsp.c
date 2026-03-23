@@ -14,6 +14,9 @@ uint8_t hours_one,hours_two,minutes_one,minutes_two;
 uint8_t  step_state;
 uint8_t  first_set_temperature_value;
 
+static void set_temperature_compare_value_fun(void);
+
+
 
 void bsp_init(void)
 {
@@ -98,7 +101,10 @@ void power_on_run_handler(void)
 
 			}
 			gpro_t.set_temp_value_success=0;
-			
+			gpro_t.first_set_ptc_on=0;
+			gpro_t.first_rcoder_ptc_on_flag =0;
+			run_t.set_temperature_special_flag =0;
+
 			run_t.gRunCommand_label= SPECIAL_DISP;
 
 
@@ -169,8 +175,26 @@ void power_on_run_handler(void)
 
               }
             
-             }    
+             }   
+
+			 run_t.gRunCommand_label= 5;
       break;
+
+	  case 0x05:
+  
+         	
+     if(gpro_t.gTimer_temp_compare_value > 2){
+	 	gpro_t.gTimer_temp_compare_value =0;
+		
+       
+	      set_temperature_compare_value_fun();
+
+     	}
+
+
+	  
+        run_t.gRunCommand_label= SPECIAL_DISP;
+	  break;
 
 	}
 }
@@ -293,5 +317,119 @@ void power_off_run_handler(void)
 *
 *
 *******************************************************/
+/**************************************************************************************************
+*
+*Function Name:void set_temperature_compare_value_fun(void)
+*Function:
+*Input Ref:
+*Return Ref:
+*
+*****************************************************************************************************/
+void set_temperature_compare_value_fun(void)
+{
+    static uint8_t ptc_on_flag ,ptc_off_flag;
+
+    if(run_t.fan_warning ==1 || run_t.ptc_warning ==1)return ;
+
+	if( run_t.set_temperature_special_flag  > 0 )return ; //WT.EDIT 2026.01.19
+ 
+
+	// display_dry_temp_fun();//WT.EDIT 2026.0117
+
+    switch(gpro_t.set_temp_value_success){// gpro_t.set_temp_value_success=1;
+
+	 case 1:
+       
+
+      if(gpro_t.set_up_temperature_value <= run_t.gReal_humtemp[1]){// && gpro_t.smart_phone_turn_off_ptc_flag ==0){
+
+               run_t.gDry = 0;
+		
+			   LED_DRY_OFF();
+
+			   if(gpro_t.first_set_ptc_on==0)gpro_t.first_set_ptc_on=1;  //the first open ptc heating //WT.DEDIT 2028.08.27 modify this flow codes
+			   else if(gpro_t.first_set_ptc_on==2)gpro_t.first_set_ptc_on=3;
+			   else if(gpro_t.first_set_ptc_on==4)gpro_t.first_set_ptc_on=5;
+				
+
+               SendData_Set_Command(0x22,0x00); //close ptc 
+	           vTaskDelay(pdMS_TO_TICKS(100));
+
+               	
+			   
+      }
+      else{
+
+	       if((gpro_t.first_set_ptc_on==1 || gpro_t.first_set_ptc_on==0) &&  gpro_t.g_manual_shutoff_dry_flag ==0 ){//the first open ptc heating //WT.DEDIT 2028.08.27 modify this flow codes
+	          
+                if(gpro_t.first_set_ptc_on==1)gpro_t.first_set_ptc_on=2;
+				else if(gpro_t.first_set_ptc_on==0)gpro_t.first_set_ptc_on=4;
+				run_t.gDry = 1;
+			
+	             LED_DRY_ON();
+			     ptc_on_flag ++;
+			   
+			   
+	              SendData_Set_Command(0x22,0x01); //open ptc 
+	              vTaskDelay(pdMS_TO_TICKS(100));
+			    
+	          
+            
+	       }
+		   else if((gpro_t.first_set_ptc_on==3 || gpro_t.first_set_ptc_on==5) && (gpro_t.set_up_temperature_value -3) >= run_t.gReal_humtemp[1] &&  gpro_t.g_manual_shutoff_dry_flag == 0){//WT.DEDIT 2028.08.27 modify this flow codes
+                 run_t.gDry = 1;
+				   LED_DRY_ON();
+
+		           ptc_on_flag++;
+	            
+	            	SendData_Set_Command(0x22,0x01); //open ptc 
+	            	vTaskDelay(pdMS_TO_TICKS(100));
+			     
+	          
+			}
+
+
+      }
+
+	 break;
+
+	 case 0:
+      
+        
+        if(run_t.gReal_humtemp[1] > 39){ // must be clouse ptc.
+    
+               gpro_t.first_rcoder_ptc_on_flag  = 1;
+               run_t.gDry = 0;
+		       LED_DRY_OFF();
+		
+			    SendData_Set_Command(0x22,0x00); //close ptc 
+               		vTaskDelay(pdMS_TO_TICKS(100));
+			     
+          }
+          else if(gpro_t.first_rcoder_ptc_on_flag  == 1 && run_t.gReal_humtemp[1] < 38 &&  gpro_t.g_manual_shutoff_dry_flag ==0 ){
+               
+                 
+                       run_t.gDry = 1;
+					   LED_DRY_ON();
+				
+                       SendData_Set_Command(0x22,0x01); //open ptc 
+                       vTaskDelay(pdMS_TO_TICKS(100));
+
+				     	
+            }
+            else if(gpro_t.first_rcoder_ptc_on_flag == 0 && run_t.gReal_humtemp[1] < 40 &&  gpro_t.g_manual_shutoff_dry_flag == 0){ //WT.EDIT 2025.10.31
+
+	            run_t.gDry = 1;
+				LED_DRY_ON();
+				SendData_Set_Command(0x22,0x01); //open ptc  
+				vTaskDelay(pdMS_TO_TICKS(100));
+			    
+			}
+             
+       
+	break;
+	}
+}
+
 
 

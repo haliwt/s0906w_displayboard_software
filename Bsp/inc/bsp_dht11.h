@@ -8,6 +8,7 @@ typedef enum {
 	RUN_POWER_OFF,
     UPDATE_DATA,
     SPECIAL_DISP,
+    
     POWER_OFF_PROCESS,
     RUN_WIFI_NORMAL_POWER_ON,
     RUN_NULL

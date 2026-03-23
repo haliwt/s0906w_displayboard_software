@@ -73,7 +73,7 @@ void receive_data_from_mainboard(uint8_t *pdata)
 				LED_DRY_ON();
 			}
 			else if(pdata[3] == 0x0){
-	 
+	            
 				run_t.gDry =0;
 				LED_DRY_OFF();
 			  
@@ -237,6 +237,13 @@ void receive_data_from_mainboard(uint8_t *pdata)
   
 	  break;
 
+
+	  case 0x19:
+
+	   
+
+	  break;
+
 	  case 0x20: //手机定时�??机，发�?�的数据�??3个�??
 
 	      if(pdata[3]==0x01){
@@ -340,9 +347,23 @@ void receive_data_from_mainboard(uint8_t *pdata)
              run_t.set_temperature_unit_value  =gpro_t.set_up_temperature_value % 10; //
 
              TM1639_Write_2bit_SetUp_TempData(run_t.set_temperature_decade_value,run_t.set_temperature_unit_value,0);
-				
-	  
-			 
+		    // vTaskDelay(300);
+		     gpro_t.g_manual_shutoff_dry_flag = 0;
+			 if(gpro_t.set_up_temperature_value <= run_t.gReal_humtemp[1]){// && gpro_t.smart_phone_turn_off_ptc_flag ==0){
+             	run_t.gDry =0 ;//&& run_t.gPlasma ==1  && run_t.gUltransonic==1
+				LED_DRY_OFF();
+			    SendData_Set_Command(0x22, 0x0);//sendCommandAndAck(dry_cmd, 0x01, check_ack_ptc_on);
+			    osDelay(100);
+            
+			    
+			 }
+			 else{
+			   run_t.gDry =1 ;//&& run_t.gPlasma ==1  && run_t.gUltransonic==1
+			   LED_DRY_ON();
+			   SendData_Set_Command(0x22, 0x01);//sendCommandAndAck(dry_cmd, 0x01, check_ack_ptc_on);
+			   osDelay(100);
+
+			 }
 
 			}
 		  	

@@ -98,7 +98,9 @@ typedef struct _pro_t{
    uint8_t DMA_txComplete;
    uint8_t mainBord_setTimer_flag;
    uint8_t main_settemp_value;
-   
+   uint8_t first_rcoder_ptc_on_flag;
+   uint8_t first_set_ptc_on;
+
   
 
 
@@ -116,6 +118,7 @@ typedef struct _pro_t{
    uint8_t gTimer_wifi_led_blink ;
    uint8_t gTimer_disp_moke_switch;
    uint8_t gTimer_mode_long_key_counter;
+   uint8_t gTimer_temp_compare_value;
 
    uint16_t gTimer_4bitsmg_blink_times;
   

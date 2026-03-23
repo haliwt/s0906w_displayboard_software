@@ -284,6 +284,7 @@ void key_dec_fun(void)
 		case 0:  // 设置温度减少
             SendData_Buzzer();
 		    osDelay(50);
+		    //gpro_t.set_up_temperature_value 
             set_temperature_value(-1);
             break;
 
